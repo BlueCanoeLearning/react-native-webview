@@ -53,4 +53,4 @@ android/gradle
 android/gradlew
 android/gradlew.bat
 
-lib/
+# lib/
