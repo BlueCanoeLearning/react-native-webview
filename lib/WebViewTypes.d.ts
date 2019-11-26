@@ -14,9 +14,6 @@ export interface CustomUIManager extends UIManagerStatic {
         Commands: WebViewCommands;
     };
     dispatchViewManagerCommand: (viewHandle: number, command: Function, params: object | null) => void;
-    RNCUIWebView: {
-        Commands: WebViewCommands;
-    };
     RNCWKWebView: {
         Commands: WebViewCommands;
     };
@@ -152,7 +149,6 @@ export interface CommonNativeWebViewProps extends ViewProps {
     onLoadingStart: (event: WebViewNavigationEvent) => void;
     onMessage: (event: WebViewMessageEvent) => void;
     onShouldStartLoadWithRequest: (event: WebViewNavigationEvent) => void;
-    scalesPageToFit?: boolean;
     showsHorizontalScrollIndicator?: boolean;
     showsVerticalScrollIndicator?: boolean;
     source: any;
@@ -190,11 +186,6 @@ export interface IOSNativeWebViewProps extends CommonNativeWebViewProps {
     useSharedProcessPool?: boolean;
 }
 export interface IOSWebViewProps extends WebViewSharedProps {
-    /**
-     * If true, use WKWebView instead of UIWebView.
-     * @platform ios
-     */
-    useWebKit?: boolean;
     /**
      * Does not store any data within the lifetime of the WebView.
      */
@@ -491,14 +482,6 @@ export interface WebViewSharedProps extends ViewProps {
      * shown in the `WebView`. The default value is `true`.
      */
     showsVerticalScrollIndicator?: boolean;
-    /**
-     * Boolean that controls whether the web content is scaled to fit
-     * the view and enables the user to change the scale. The default value
-     * is `true`.
-     *
-     * On iOS, when `useWebKit=true`, this prop will not work.
-     */
-    scalesPageToFit?: boolean;
     /**
      * Boolean that determines whether HTML5 audio and video requires the user
      * to tap them before they start playing. The default value is `true`.
