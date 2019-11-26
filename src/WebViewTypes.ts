@@ -642,4 +642,6 @@ export interface WebViewSharedProps extends ViewProps {
    * toggles where other resources with the file scheme `file://` can be accessed.
    */
   allowFileAccessFromFileURLs?: boolean;
+
+  messagingEnabled?: boolean;
 }

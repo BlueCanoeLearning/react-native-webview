@@ -510,6 +510,12 @@ export interface WebViewSharedProps extends ViewProps {
      * Should caching be enabled. Default is true.
      */
     cacheEnabled?: boolean;
+    /**
+     * If the webpage is loading in the context of a file scheme `file://`, this
+     * toggles where other resources with the file scheme `file://` can be accessed.
+     */
+    allowFileAccessFromFileURLs?: boolean;
+    messagingEnabled?: boolean;
 }
 export {};
 //# sourceMappingURL=WebViewTypes.d.ts.map
