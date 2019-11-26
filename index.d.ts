@@ -39,6 +39,8 @@ declare class WebView extends Component<WebViewProps> {
      * Focuses on WebView rendered page.
      */
     requestFocus: () => void;
+
+    postMessage: (data: string)  => void;
 }
 
 export { WebView };
