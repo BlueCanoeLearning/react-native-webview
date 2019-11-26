@@ -157,11 +157,11 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     settings.setDisplayZoomControls(false);
     settings.setDomStorageEnabled(true);
 
-    settings.setAllowFileAccess(true);
+    settings.setAllowFileAccess(false);
     settings.setAllowContentAccess(false);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-      settings.setAllowFileAccessFromFileURLs(true);
-      setAllowUniversalAccessFromFileURLs(webView, true);
+      settings.setAllowFileAccessFromFileURLs(false);
+      setAllowUniversalAccessFromFileURLs(webView, false);
     }
     setMixedContentMode(webView, "never");
 
@@ -213,6 +213,16 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     });
 
     return webView;
+  }
+
+  @ReactProp(name = "allowFileAccessFromFileURLs")
+  public void setAllowFileAccessFromFileURLs(WebView view, boolean enabled) {
+    view.getSettings().setAllowFileAccess(enabled);
+    view.getSettings().setAllowContentAccess(enabled);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+      view.getSettings().setAllowFileAccessFromFileURLs(enabled);
+      setAllowUniversalAccessFromFileURLs(webView, enabled);
+    }
   }
 
   @ReactProp(name = "javaScriptEnabled")
