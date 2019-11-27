@@ -215,16 +215,6 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     return webView;
   }
 
-  @ReactProp(name = "allowFileAccessFromFileURLs")
-  public void setAllowFileAccessFromFileURLs(WebView view, boolean enabled) {
-    view.getSettings().setAllowFileAccess(enabled);
-    view.getSettings().setAllowContentAccess(enabled);
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-      view.getSettings().setAllowFileAccessFromFileURLs(enabled);
-      setAllowUniversalAccessFromFileURLs(webView, enabled);
-    }
-  }
-
   @ReactProp(name = "javaScriptEnabled")
   public void setJavaScriptEnabled(WebView view, boolean enabled) {
     view.getSettings().setJavaScriptEnabled(enabled);

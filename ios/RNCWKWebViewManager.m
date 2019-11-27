@@ -54,7 +54,7 @@ RCT_EXPORT_VIEW_PROPERTY(allowsLinkPreview, BOOL)
 /**
  * Expose methods to enable messaging the webview.
  */
-RCT_EXPORT_VIEW_PROPERTY(allowFileAccessFromFileURLs, BOOL)
+RCT_EXPORT_VIEW_PROPERTY(allowUniversalAccessFromFileURLs, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(messagingEnabled, BOOL)
 RCT_EXPORT_VIEW_PROPERTY(onMessage, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onScroll, RCTDirectEventBlock)

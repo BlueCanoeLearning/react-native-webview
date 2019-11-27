@@ -211,6 +211,7 @@ export interface CommonNativeWebViewProps extends ViewProps {
   injectedJavaScript?: string;
   mediaPlaybackRequiresUserAction?: boolean;
   messagingEnabled: boolean;
+  allowUniversalAccessFromFileURLs?: boolean;
   onScroll?: (event: NativeScrollEvent) => void;
   onLoadingError: (event: WebViewErrorEvent) => void;
   onLoadingFinish: (event: WebViewNavigationEvent) => void;
@@ -228,7 +229,6 @@ export interface CommonNativeWebViewProps extends ViewProps {
 
 export interface AndroidNativeWebViewProps extends CommonNativeWebViewProps {
   allowFileAccess?: boolean;
-  allowUniversalAccessFromFileURLs?: boolean;
   androidHardwareAccelerationDisabled?: boolean;
   domStorageEnabled?: boolean;
   geolocationEnabled?: boolean;
@@ -434,14 +434,6 @@ export interface AndroidWebViewProps extends WebViewSharedProps {
   geolocationEnabled?: boolean;
 
   /**
-   * Boolean that sets whether JavaScript running in the context of a file
-   * scheme URL should be allowed to access content from any origin.
-   * Including accessing content from other file scheme URLs
-   * @platform android
-   */
-  allowUniversalAccessFromFileURLs?: boolean;
-
-  /**
    * Sets whether the webview allow access to file system.
    * @platform android
    */
@@ -636,12 +628,13 @@ export interface WebViewSharedProps extends ViewProps {
    * Should caching be enabled. Default is true.
    */
   cacheEnabled?: boolean;
-
+  
   /**
-   * If the webpage is loading in the context of a file scheme `file://`, this
-   * toggles where other resources with the file scheme `file://` can be accessed.
+   * Boolean that sets whether JavaScript running in the context of a file
+   * scheme URL should be allowed to access content from any origin.
+   * Including accessing content from other file scheme URLs
    */
-  allowFileAccessFromFileURLs?: boolean;
+  allowUniversalAccessFromFileURLs?: boolean;
 
   messagingEnabled?: boolean;
 }
