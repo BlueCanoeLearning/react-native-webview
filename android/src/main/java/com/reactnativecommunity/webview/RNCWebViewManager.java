@@ -487,17 +487,20 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
           RNCWebView reactWebView = (RNCWebView) root;
           JSONObject eventInitDict = new JSONObject();
           eventInitDict.put("data", args.getString(0));
-          reactWebView.evaluateJavascriptWithFallback("(function () {" +
-            "var event;" +
-            "var data = " + eventInitDict.toString() + ";" +
-            "try {" +
-            "event = new MessageEvent('message', data);" +
-            "} catch (e) {" +
-            "event = document.createEvent('MessageEvent');" +
-            "event.initMessageEvent('message', true, true, data.data, data.origin, data.lastEventId, data.source);" +
-            "}" +
-            "document.dispatchEvent(event);" +
-            "})();");
+          reactWebView.evaluateJavascriptWithFallback(
+              "(function () {"
+                  + "var event;"
+                  + "var data = "
+                  + eventInitDict.toString()
+                  + ";"
+                  + "try {"
+                  + "event = new MessageEvent('message', data);"
+                  + "} catch (e) {"
+                  + "event = document.createEvent('MessageEvent');"
+                  + "event.initMessageEvent('message', true, true, data.data, data.origin, data.lastEventId, data.source);"
+                  + "}"
+                  + "document.dispatchEvent(event);"
+                  + "})();");
         } catch (JSONException e) {
           throw new RuntimeException(e);
         }
@@ -595,9 +598,8 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
       if (!mLastLoadFailed) {
         RNCWebView reactWebView = (RNCWebView) webView;
-
         reactWebView.callInjectedJavaScript();
-
+        reactWebView.linkBridge();
         emitFinishEvent(webView, url);
       }
     }
@@ -860,8 +862,22 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
       if (enabled) {
         addJavascriptInterface(createRNCWebViewBridge(this), JAVASCRIPT_INTERFACE);
+        linkBridge();
       } else {
         removeJavascriptInterface(JAVASCRIPT_INTERFACE);
+      }
+    }
+
+    public void linkBridge() {
+      if (messagingEnabled) {
+        evaluateJavascriptWithFallback(
+            "("
+                + "window.originalPostMessage = window.postMessage,"
+                + "window.postMessage = function(data) {"
+                + JAVASCRIPT_INTERFACE
+                + ".postMessage(String(data));"
+                + "}"
+                + ")");
       }
     }
 
