@@ -811,7 +811,7 @@ static NSURLCredential* clientAuthenticationCredential;
 
 - (void) disableIgnoreSilentSwitch {
   // TODO: Call this function in UIApplicationWillResignActive
-  NSString *injectedJs = "document.getElementById('wkwebviewAudio').src=null;";
+  NSString *injectedJs = @"document.getElementById('wkwebviewAudio').src=null;";
   [self.webView evaluateJavaScript: injectedJs completionHandler: nil];
 }
 
