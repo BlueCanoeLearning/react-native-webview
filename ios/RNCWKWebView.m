@@ -207,7 +207,9 @@ static NSURLCredential* clientAuthenticationCredential;
     }
 
     _webView = [[WKWebView alloc] initWithFrame:self.bounds configuration: wkWebViewConfig];
-    [_webView.configuration.preferences setValue:@YES forKey:@"allowFileAccessFromFileURLs"];
+    if (_allowUniversalAccessFromFileURLs) {
+          [_webView.configuration.preferences setValue:@YES forKey:@"allowFileAccessFromFileURLs"];
+    }
     _webView.scrollView.delegate = self;
     _webView.UIDelegate = self;
     _webView.navigationDelegate = self;
@@ -350,6 +352,11 @@ static NSURLCredential* clientAuthenticationCredential;
       [self visitSource];
     }
   }
+}
+
+- (void)setAllowUniversalAccessFromFileURLs:(BOOL)allow {
+    _allowUniversalAccessFromFileURLs = allow;
+    [_webView.configuration.preferences setValue:[NSNumber numberWithBool:allow] forKey:@"allowFileAccessFromFileURLs"];
 }
 
 - (void)setContentInset:(UIEdgeInsets)contentInset

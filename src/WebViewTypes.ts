@@ -31,9 +31,6 @@ export interface CustomUIManager extends UIManagerStatic {
     command: Function,
     params: object | null,
   ) => void;
-  RNCUIWebView: {
-    Commands: WebViewCommands;
-  };
   RNCWKWebView: {
     Commands: WebViewCommands;
   };
@@ -214,6 +211,7 @@ export interface CommonNativeWebViewProps extends ViewProps {
   injectedJavaScript?: string;
   mediaPlaybackRequiresUserAction?: boolean;
   messagingEnabled: boolean;
+  allowUniversalAccessFromFileURLs?: boolean;
   onScroll?: (event: NativeScrollEvent) => void;
   onLoadingError: (event: WebViewErrorEvent) => void;
   onLoadingFinish: (event: WebViewNavigationEvent) => void;
@@ -221,7 +219,6 @@ export interface CommonNativeWebViewProps extends ViewProps {
   onLoadingStart: (event: WebViewNavigationEvent) => void;
   onMessage: (event: WebViewMessageEvent) => void;
   onShouldStartLoadWithRequest: (event: WebViewNavigationEvent) => void;
-  scalesPageToFit?: boolean;
   showsHorizontalScrollIndicator?: boolean;
   showsVerticalScrollIndicator?: boolean;
   // TODO: find a better way to type this.
@@ -232,7 +229,6 @@ export interface CommonNativeWebViewProps extends ViewProps {
 
 export interface AndroidNativeWebViewProps extends CommonNativeWebViewProps {
   allowFileAccess?: boolean;
-  allowUniversalAccessFromFileURLs?: boolean;
   androidHardwareAccelerationDisabled?: boolean;
   domStorageEnabled?: boolean;
   geolocationEnabled?: boolean;
@@ -264,11 +260,6 @@ export interface IOSNativeWebViewProps extends CommonNativeWebViewProps {
 }
 
 export interface IOSWebViewProps extends WebViewSharedProps {
-  /**
-   * If true, use WKWebView instead of UIWebView.
-   * @platform ios
-   */
-  useWebKit?: boolean;
 
   /**
    * Does not store any data within the lifetime of the WebView.
@@ -417,6 +408,7 @@ export interface IOSWebViewProps extends WebViewSharedProps {
    * @platform ios
    */
   keyboardDisplayRequiresUserAction?: boolean;
+
 }
 
 export interface AndroidWebViewProps extends WebViewSharedProps {
@@ -440,14 +432,6 @@ export interface AndroidWebViewProps extends WebViewSharedProps {
    * @platform android
    */
   geolocationEnabled?: boolean;
-
-  /**
-   * Boolean that sets whether JavaScript running in the context of a file
-   * scheme URL should be allowed to access content from any origin.
-   * Including accessing content from other file scheme URLs
-   * @platform android
-   */
-  allowUniversalAccessFromFileURLs?: boolean;
 
   /**
    * Sets whether the webview allow access to file system.
@@ -613,15 +597,6 @@ export interface WebViewSharedProps extends ViewProps {
   showsVerticalScrollIndicator?: boolean;
 
   /**
-   * Boolean that controls whether the web content is scaled to fit
-   * the view and enables the user to change the scale. The default value
-   * is `true`.
-   *
-   * On iOS, when `useWebKit=true`, this prop will not work.
-   */
-  scalesPageToFit?: boolean;
-
-  /**
    * Boolean that determines whether HTML5 audio and video requires the user
    * to tap them before they start playing. The default value is `true`.
    */
@@ -653,4 +628,13 @@ export interface WebViewSharedProps extends ViewProps {
    * Should caching be enabled. Default is true.
    */
   cacheEnabled?: boolean;
+
+  /**
+   * Boolean that sets whether JavaScript running in the context of a file
+   * scheme URL should be allowed to access content from any origin.
+   * Including accessing content from other file scheme URLs
+   */
+  allowUniversalAccessFromFileURLs?: boolean;
+
+  messagingEnabled?: boolean;
 }

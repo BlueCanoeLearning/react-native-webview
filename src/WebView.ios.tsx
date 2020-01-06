@@ -36,7 +36,6 @@ import styles from './WebView.styles';
 const UIManager = NotTypedUIManager as CustomUIManager;
 
 const { resolveAssetSource } = Image;
-let didWarnAboutUIWebViewUsage = false;
 // Imported from https://github.com/facebook/react-native/blob/master/Libraries/Components/ScrollView/processDecelerationRate.js
 const processDecelerationRate = (
   decelerationRate: DecelerationRateConstant | number | undefined,
@@ -50,12 +49,8 @@ const processDecelerationRate = (
   return newDecelerationRate;
 };
 
-const RNCUIWebViewManager = NativeModules.RNCUIWebViewManager as ViewManager;
 const RNCWKWebViewManager = NativeModules.RNCWKWebViewManager as ViewManager;
 
-const RNCUIWebView: typeof NativeWebViewIOS = requireNativeComponent(
-  'RNCUIWebView',
-);
 const RNCWKWebView: typeof NativeWebViewIOS = requireNativeComponent(
   'RNCWKWebView',
 );
@@ -80,44 +75,7 @@ class WebView extends React.Component<IOSWebViewProps, State> {
 
   webViewRef = React.createRef<NativeWebViewIOS>();
 
-  // eslint-disable-next-line camelcase
-  UNSAFE_componentWillMount() {
-    if (!this.props.useWebKit && !didWarnAboutUIWebViewUsage) {
-      didWarnAboutUIWebViewUsage = true;
-      console.warn(
-        'UIWebView is deprecated and will be removed soon, please use WKWebView (do not override useWebkit={true} prop),'
-          + ' more infos here: https://github.com/react-native-community/react-native-webview/issues/312',
-      );
-    }
-    if (
-      this.props.useWebKit === true
-      && this.props.scalesPageToFit !== undefined
-    ) {
-      console.warn(
-        'The scalesPageToFit property is not supported when useWebKit = true',
-      );
-    }
-    if (
-      !this.props.useWebKit
-      && this.props.allowsBackForwardNavigationGestures
-    ) {
-      console.warn(
-        'The allowsBackForwardNavigationGestures property is not supported when useWebKit = false',
-      );
-    }
-
-    if (!this.props.useWebKit && this.props.incognito) {
-      console.warn(
-        'The incognito property is not supported when useWebKit = false',
-      );
-    }
-  }
-
-  // eslint-disable-next-line react/sort-comp
-  getCommands = () =>
-    !this.props.useWebKit
-      ? getViewManagerConfig('RNCUIWebView').Commands
-      : getViewManagerConfig('RNCWKWebView').Commands;
+  getCommands = () => getViewManagerConfig('RNCWKWebView').Commands;
 
   /**
    * Go forward one page in the web view's history.
@@ -275,30 +233,19 @@ class WebView extends React.Component<IOSWebViewProps, State> {
   ) => {
     let { viewManager }: WebViewNativeConfig = this.props.nativeConfig || {};
 
-    if (this.props.useWebKit) {
-      viewManager = viewManager || RNCWKWebViewManager;
-    } else {
-      viewManager = viewManager || RNCUIWebViewManager;
-    }
+    viewManager = viewManager || RNCWKWebViewManager;
+
     invariant(viewManager != null, 'viewManager expected to be non-null');
     viewManager.startLoadWithResult(!!shouldStart, lockIdentifier);
   };
 
   componentDidUpdate(prevProps: IOSWebViewProps) {
-    if (!(prevProps.useWebKit && this.props.useWebKit)) {
-      return;
-    }
 
     this.showRedboxOnPropChanges(prevProps, 'allowsInlineMediaPlayback');
     this.showRedboxOnPropChanges(prevProps, 'incognito');
     this.showRedboxOnPropChanges(prevProps, 'mediaPlaybackRequiresUserAction');
     this.showRedboxOnPropChanges(prevProps, 'dataDetectorTypes');
 
-    if (this.props.scalesPageToFit !== undefined) {
-      console.warn(
-        'The scalesPageToFit property is not supported when useWebKit = true',
-      );
-    }
   }
 
   showRedboxOnPropChanges(
@@ -321,9 +268,7 @@ class WebView extends React.Component<IOSWebViewProps, State> {
       originWhitelist,
       renderError,
       renderLoading,
-      scalesPageToFit = this.props.useWebKit ? undefined : true,
       style,
-      useWebKit,
       ...otherProps
     } = this.props;
 
@@ -365,11 +310,7 @@ class WebView extends React.Component<IOSWebViewProps, State> {
 
     let NativeWebView = nativeConfig.component as typeof NativeWebViewIOS;
 
-    if (useWebKit) {
-      NativeWebView = NativeWebView || RNCWKWebView;
-    } else {
-      NativeWebView = NativeWebView || RNCUIWebView;
-    }
+    NativeWebView = NativeWebView || RNCWKWebView;
 
     const webView = (
       <NativeWebView
@@ -385,7 +326,6 @@ class WebView extends React.Component<IOSWebViewProps, State> {
         onScroll={this.props.onScroll}
         onShouldStartLoadWithRequest={onShouldStartLoadWithRequest}
         ref={this.webViewRef}
-        scalesPageToFit={scalesPageToFit}
         // TODO: find a better way to type this.
         source={resolveAssetSource(this.props.source as ImageSourcePropType)}
         style={webViewStyles}

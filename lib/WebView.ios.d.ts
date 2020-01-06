@@ -10,7 +10,6 @@ declare class WebView extends React.Component<IOSWebViewProps, State> {
     static isFileUploadSupported: () => Promise<boolean>;
     state: State;
     webViewRef: React.RefObject<NativeWebViewIOS>;
-    UNSAFE_componentWillMount(): void;
     getCommands: () => import("./WebViewTypes").WebViewCommands;
     /**
      * Go forward one page in the web view's history.

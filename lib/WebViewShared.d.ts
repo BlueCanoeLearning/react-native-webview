@@ -2,7 +2,7 @@
 import { OnShouldStartLoadWithRequest } from './WebViewTypes';
 declare const defaultOriginWhitelist: string[];
 declare const createOnShouldStartLoadWithRequest: (loadRequest: (shouldStart: boolean, url: string, lockIdentifier: number) => void, originWhitelist: ReadonlyArray<string>, onShouldStartLoadWithRequest?: OnShouldStartLoadWithRequest | undefined) => ({ nativeEvent }: import("react-native").NativeSyntheticEvent<import("./WebViewTypes").WebViewNavigation>) => void;
-declare const getViewManagerConfig: (viewManagerName: "RNCUIWebView" | "RNCWKWebView" | "RNCWebView") => {
+declare const getViewManagerConfig: (viewManagerName: "RNCWKWebView" | "RNCWebView") => {
     Commands: import("./WebViewTypes").WebViewCommands;
 };
 declare const defaultRenderLoading: () => JSX.Element;

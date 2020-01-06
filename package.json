@@ -35,7 +35,6 @@
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",
     "react-test-renderer": "16.9.0",
-  
     "@semantic-release/git": "7.0.5",
     "@types/escape-string-regexp": "1.0.0",
     "@types/invariant": "^2.2.29",
