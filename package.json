@@ -8,7 +8,7 @@
     "Thibault Malbranche <malbranche.thibault@gmail.com>"
   ],
   "license": "MIT",
-  "version": "5.9.1",
+  "version": "5.9.2",
   "homepage": "https://github.com/react-native-community/react-native-webview#readme",
   "scripts": {
     "ci": "CI=true && yarn lint && yarn test",
@@ -19,15 +19,23 @@
     "test": "yarn jest"
   },
   "peerDependencies": {
-    "react": "^16.0",
-    "react-native": ">=0.57 <0.60"
+    "react": "^16.9",
+    "react-native": ">=0.61.5"
   },
   "dependencies": {
     "escape-string-regexp": "1.0.5",
     "invariant": "2.2.4"
   },
   "devDependencies": {
-    "@babel/core": "7.3.4",
+    "@babel/core": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.5.1",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.56.0",
+    "react-test-renderer": "16.9.0",
+  
     "@semantic-release/git": "7.0.5",
     "@types/escape-string-regexp": "1.0.0",
     "@types/invariant": "^2.2.29",
@@ -37,16 +45,12 @@
     "@typescript-eslint/eslint-plugin": "1.4.2",
     "@typescript-eslint/parser": "1.4.2",
     "babel-eslint": "10.0.1",
-    "babel-jest": "^24.0.0",
-    "eslint": "5.15.1",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-prettier": "4.1.0",
     "eslint-plugin-import": "2.16.0",
     "eslint-plugin-jsx-a11y": "6.2.1",
     "eslint-plugin-react": "7.12.4",
     "eslint-plugin-react-native": "3.6.0",
-    "jest": "24.5.0",
-    "metro-react-native-babel-preset": "0.53.1",
     "react": "16.8.3",
     "react-native": "0.59.1",
     "semantic-release": "15.10.3",
@@ -63,5 +67,8 @@
     "index.js",
     "index.d.ts",
     "react-native-webview.podspec"
-  ]
+  ],
+  "resolutions": {
+    "**/**/fsevents": "^1.2.9"
+  }
 }
