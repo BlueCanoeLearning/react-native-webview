@@ -713,7 +713,7 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
         RNCWebView reactWebView = (RNCWebView) webView;
 
         reactWebView.callInjectedJavaScript();
-
+        reactWebView.linkBridge();
         emitFinishEvent(webView, url);
       }
     }
@@ -1048,8 +1048,22 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
 
       if (enabled) {
         addJavascriptInterface(createRNCWebViewBridge(this), JAVASCRIPT_INTERFACE);
+        linkBridge();
       } else {
         removeJavascriptInterface(JAVASCRIPT_INTERFACE);
+      }
+    }
+
+    public void linkBridge() {
+      if (messagingEnabled) {
+        evaluateJavascriptWithFallback(
+            "("
+                + "window.originalPostMessage = window.postMessage,"
+                + "window.postMessage = function(data) {"
+                + JAVASCRIPT_INTERFACE
+                + ".postMessage(String(data));"
+                + "}"
+                + ")");
       }
     }
 
@@ -1076,24 +1090,25 @@ public class RNCWebViewManager extends SimpleViewManager<WebView> {
     }
 
     public void onMessage(String message) {
-      if (mRNCWebViewClient != null) {
-        WebView webView = this;
-        webView.post(new Runnable() {
-          @Override
-          public void run() {
-            if (mRNCWebViewClient == null) {
-              return;
-            }
-            WritableMap data = mRNCWebViewClient.createWebViewEvent(webView, webView.getUrl());
-            data.putString("data", message);
-            dispatchEvent(webView, new TopMessageEvent(webView.getId(), data));
-          }
-        });
-      } else {
-        WritableMap eventData = Arguments.createMap();
-        eventData.putString("data", message);
-        dispatchEvent(this, new TopMessageEvent(this.getId(), eventData));
-      }
+      dispatchEvent(this, new TopMessageEvent(this.getId(), message));
+      // if (mRNCWebViewClient != null) {
+      //   WebView webView = this;
+      //   webView.post(new Runnable() {
+      //     @Override
+      //     public void run() {
+      //       if (mRNCWebViewClient == null) {
+      //         return;
+      //       }
+      //       WritableMap data = mRNCWebViewClient.createWebViewEvent(webView, webView.getUrl());
+      //       data.putString("data", message);
+      //       dispatchEvent(webView, new TopMessageEvent(webView.getId(), data));
+      //     }
+      //   });
+      // } else {
+      //   WritableMap eventData = Arguments.createMap();
+      //   eventData.putString("data", message);
+      //   dispatchEvent(this, new TopMessageEvent(this.getId(), eventData));
+      // }
     }
 
     protected void onScrollChanged(int x, int y, int oldX, int oldY) {
