@@ -57,5 +57,6 @@
 - (void)goBack;
 - (void)reload;
 - (void)stopLoading;
-
+- (void)forceIgnoreSilentSwitch:(BOOL)initialSetup;
+- (void)disableIgnoreSilentSwitch;
 @end

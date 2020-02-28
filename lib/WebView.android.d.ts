@@ -47,6 +47,7 @@ declare class WebView extends React.Component<AndroidWebViewProps, State> {
     onMessage: (event: import("react-native").NativeSyntheticEvent<import("./WebViewTypes").WebViewMessage>) => void;
     onLoadingProgress: (event: import("react-native").NativeSyntheticEvent<import("./WebViewTypes").WebViewNativeProgressEvent>) => void;
     onShouldStartLoadWithRequestCallback: (shouldStart: boolean, url: string) => void;
+    ignoreSilentSwitch: () => void;
     render(): JSX.Element;
 }
 export default WebView;

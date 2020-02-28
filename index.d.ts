@@ -41,6 +41,14 @@ declare class WebView extends Component<WebViewProps> {
     requestFocus: () => void;
 
     postMessage: (data: string)  => void;
+
+    /**
+     * **iOS Only**
+     * 
+     * Toggles whether the webview ignores the silent switch when
+     * the audio session category is `AVAudioSession.Category.ambient`
+     */
+    ignoreSilentSwitch: (ignore: boolean) => void;
 }
 
 export { WebView };

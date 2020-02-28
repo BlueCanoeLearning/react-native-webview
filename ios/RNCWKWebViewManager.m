@@ -107,6 +107,24 @@ RCT_CUSTOM_VIEW_PROPERTY(keyboardDisplayRequiresUserAction, BOOL, RNCWKWebView) 
   view.keyboardDisplayRequiresUserAction = json == nil ? true : [RCTConvert BOOL: json];
 }
 
+RCT_EXPORT_METHOD(ignoreSilentSwitch:(nonnull NSNumber *)reactTag ignore:(BOOL)ignore)
+{
+    [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, RNCWKWebView *> *viewRegistry) {
+        RNCWKWebView *view = viewRegistry[reactTag];
+        if (![view isKindOfClass:[RNCWKWebView class]]) {
+            RCTLogError(@"Invalid view returned from registry, expecting RNCWKWebView, got: %@", view);
+        } else {
+            if (ignore) {
+                [view forceIgnoreSilentSwitch:false];
+            } else {
+                [view disableIgnoreSilentSwitch];
+            }
+        }
+
+    }];
+}
+
+
 RCT_EXPORT_METHOD(injectJavaScript:(nonnull NSNumber *)reactTag script:(NSString *)script)
 {
   [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, RNCWKWebView *> *viewRegistry) {

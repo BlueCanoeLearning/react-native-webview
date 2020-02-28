@@ -122,6 +122,14 @@ class WebView extends React.Component<IOSWebViewProps, State> {
     );
   };
 
+  ignoreSilentSwitch = (data: boolean) => {
+    UIManager.dispatchViewManagerCommand(
+      this.getWebViewHandle(),
+      this.getCommands().ignoreSilentSwitch,
+      [data]
+    );
+  }
+
   /**
    * Posts a message to the web view, which will emit a `message` event.
    * Accepts one argument, `data`, which must be a string.

@@ -212,6 +212,10 @@ class WebView extends React.Component<AndroidWebViewProps, State> {
     }
   };
 
+  ignoreSilentSwitch = () => {
+    /* ignored on android */
+  }
+
   render() {
     const {
       onMessage,

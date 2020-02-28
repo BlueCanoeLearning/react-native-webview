@@ -843,7 +843,6 @@ static NSURLCredential* clientAuthenticationCredential;
   }
 
   [self setBackgroundColor: _savedBackgroundColor];
-  [self forceIgnoreSilentSwitch: true];
 }
 
 - (void)injectJavaScript:(NSString *)script
