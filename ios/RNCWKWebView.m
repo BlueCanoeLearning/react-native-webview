@@ -846,7 +846,7 @@ static NSURLCredential* clientAuthenticationCredential;
     
     [self setBackgroundColor: _savedBackgroundColor];
     if (_ignoreSilentSwitch) {
-        [self forceIgnoreSilentSwitch: NO];
+        [self forceIgnoreSilentSwitch: YES];
     }
 }
 
