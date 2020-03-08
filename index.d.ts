@@ -48,7 +48,7 @@ declare class WebView extends Component<WebViewProps> {
      * Toggles whether the webview ignores the silent switch when
      * the audio session category is `AVAudioSession.Category.ambient`
      */
-    ignoreSilentSwitch: (ignore: boolean) => void;
+    setIgnoreSilentSwitch: (ignore: boolean) => void;
 }
 
 export { WebView };

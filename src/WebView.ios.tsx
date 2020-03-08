@@ -122,7 +122,7 @@ class WebView extends React.Component<IOSWebViewProps, State> {
     );
   };
 
-  ignoreSilentSwitch = (data: boolean) => {
+  setIgnoreSilentSwitch = (data: boolean) => {
     UIManager.dispatchViewManagerCommand(
       this.getWebViewHandle(),
       this.getCommands().ignoreSilentSwitch,

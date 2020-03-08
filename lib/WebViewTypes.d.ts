@@ -322,6 +322,7 @@ export interface IOSWebViewProps extends WebViewSharedProps {
      * @platform ios
      */
     keyboardDisplayRequiresUserAction?: boolean;
+    ignoreSilentSwitch?: boolean;
 }
 export interface AndroidWebViewProps extends WebViewSharedProps {
     onNavigationStateChange?: (event: WebViewNavigation) => void;

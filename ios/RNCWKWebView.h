@@ -14,7 +14,7 @@
 @protocol RNCWKWebViewDelegate <NSObject>
 
 - (BOOL)webView:(RNCWKWebView *)webView
-   shouldStartLoadForRequest:(NSMutableDictionary<NSString *, id> *)request
+shouldStartLoadForRequest:(NSMutableDictionary<NSString *, id> *)request
    withCallback:(RCTDirectEventBlock)callback;
 
 @end
@@ -49,6 +49,8 @@
 @property (nonatomic, assign) BOOL showsHorizontalScrollIndicator;
 @property (nonatomic, assign) BOOL showsVerticalScrollIndicator;
 @property (nonatomic, assign) BOOL directionalLockEnabled;
+@property (nonatomic, assign) BOOL ignoreSilentSwitch;
+
 
 + (void)setClientAuthenticationCredential:(nullable NSURLCredential*)credential;
 - (void)postMessage:(NSString *)message;

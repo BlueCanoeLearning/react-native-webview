@@ -410,6 +410,14 @@ export interface IOSWebViewProps extends WebViewSharedProps {
    */
   keyboardDisplayRequiresUserAction?: boolean;
 
+  /**
+   * **iOS Only**
+   *
+   * Toggles whether the webview ignores the silent switch when
+   * the audio session category is `AVAudioSession.Category.ambient`
+   */
+  ignoreSilentSwitch?: boolean;
+
 }
 
 export interface AndroidWebViewProps extends WebViewSharedProps {

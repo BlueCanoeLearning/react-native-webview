@@ -27,7 +27,7 @@ declare class WebView extends React.Component<IOSWebViewProps, State> {
      * Stop loading the current page.
      */
     stopLoading: () => void;
-    ignoreSilentSwitch: (data: boolean) => void;
+    setIgnoreSilentSwitch: (data: boolean) => void;
     /**
      * Posts a message to the web view, which will emit a `message` event.
      * Accepts one argument, `data`, which must be a string.
